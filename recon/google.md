@@ -93,5 +93,68 @@ Google Dorks become powerful when multiple operators are combined to narrow resu
 
 ### ⚖️ Legal & Ethical Reminder
 
-- Google Dorking itself is not illegal — but **accessing or using data retrieved from it may be** for follow-up attacks is.
+- Google Dorking itself is not illegal — but **accessing or using data retrieved from it** for follow-up attacks is.
 - When discovering an issue, follow **responsible disclosure** processes.
+
+---
+
+## 🧭 5 — Lesser-Known Google Search Operators and Filters
+
+These operators and filters are not as well-known as `filetype:`, `inurl:`, or `intitle:`, but they can greatly refine your recon or research.
+
+---
+
+### 🌍 Country, Region, and Language Filters
+
+| Operator | Example | Description |
+|----------|---------|-------------|
+| `site:.de` | `site:.de inurl:login` | Limit results to country-level TLDs (e.g. `.de`, `.fr`, `.jp`) |
+| `country:` | *No longer officially supported, try with regional Google domains instead* | Previously filtered by country, now often replaced by using `site:` or searching from a country-specific Google (e.g. `google.co.uk`) |
+| `lang:` | `lang:en site:gov.uk` | Filter pages by language (en, de, fr, etc.) |
+
+---
+
+### 📅 Time-Based Filtering (via URL / Tools)
+
+Google does not have a true `date:` operator, but you can filter by **recency** in two ways:
+
+1. **Manually via GUI**:
+   - After searching, click `Tools` → `Any time` → choose `Past 24 hours`, `Past week`, `Custom range`, etc.
+
+2. **Via URL parameters** *(can be bookmarked or scripted)*:
+
+| Parameter | Example | Meaning |
+|-----------|---------|---------|
+| `&tbs=qdr:d` | `inurl:login site:gov.uk&tbs=qdr:d` | Past day (`d` = day) |
+| `&tbs=qdr:w` | `filetype:pdf site:.mil&tbs=qdr:w` | Past week |
+| `&tbs=qdr:m` | `site:example.com&tbs=qdr:m` | Past month |
+| `&tbs=qdr:y` | `intitle:"index of" site:edu&tbs=qdr:y` | Past year |
+
+You can also combine with custom ranges using `cdr:1,cd_min:MM/DD/YYYY,cd_max:MM/DD/YYYY`.
+
+---
+
+### 💡 Other Niche Operators
+
+| Operator | Example | Use Case |
+|----------|---------|----------|
+| `cache:` | `cache:example.com` | Show the cached version of a page (as indexed by Google) |
+| `info:` | `info:example.com` | Shows info about a site (cached, similar pages, etc.) |
+| `source:` | `source:nytimes.com hacking` | Shows news content from a specific publisher (in Google News) |
+| `related:` | `related:starbucks.com` | Find sites similar to the given domain |
+| `define:` | `define:phishing` | Get dictionary definition directly in search |
+| `weather:` | `weather:berlin` | Local weather info (useful in recon on a region) |
+| `map:` | `map:hospital near berlin` | Pulls results into Google Maps |
+| `stocks:` | `stocks:TSLA` | View stock data (OSINT use cases exist) |
+
+---
+
+### 🔍 Combining with Google Dorking
+
+You can combine these for more advanced recon:
+
+```plaintext
+site:.gov filetype:pdf intext:"confidential" &tbs=qdr:y
+site:.mil intitle:"index of" inurl:ftp lang:en
+site:example.com intext:"API_KEY=" &tbs=qdr:w
+
